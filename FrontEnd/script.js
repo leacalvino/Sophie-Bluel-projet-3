@@ -1,8 +1,7 @@
-console.log("JavaScript est connecté !");
-
 fetch("http://localhost:5678/api/works")
   .then((response) => response.json())
   .then((data) => {
+    tousLesProjets = data;
     const galerie = document.querySelector(".gallery");
     data.forEach((article) => {
       const figure = document.createElement("figure");
@@ -24,9 +23,18 @@ fetch("http://localhost:5678/api/categories")
     const filtreTous = document.createElement("button");
     filtreTous.textContent = "Tous";
     filtres.appendChild(filtreTous);
+    filtreTous.classList.add("active");
     categories.forEach((categorie) => {
       const filtre = document.createElement("button");
       filtre.textContent = categorie.name;
       filtres.appendChild(filtre);
+
+      filtre.addEventListener("click", () => {
+        document.querySelectorAll(".filtres button").forEach((bouton) => {
+          bouton.classList.remove("active");
+        });
+
+        filtre.classList.add("active");
+      });
     });
   });
